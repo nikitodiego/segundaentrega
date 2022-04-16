@@ -15,8 +15,6 @@ class contenedorFirebase{
                 thumbnail: doc.data().thumbnail,
                 stock: doc.data().stock,
                 id: doc.data().id,
-                date: doc.data().date,
-                productos: doc.data().productos
             }));
             res.json(response);
         } catch (error) { console.log(error) }
@@ -61,10 +59,6 @@ class contenedorFirebase{
             const querySnapshot = await queryCarritos.get()
             let docs = querySnapshot.docs
             const response = docs.map((doc) => ({
-                title: doc.data().title,
-                price: doc.data().price,
-                thumbnail: doc.data().thumbnail,
-                stock: doc.data().stock,
                 id: doc.data().id,
                 date: doc.data().date,
                 productos: doc.data().productos
