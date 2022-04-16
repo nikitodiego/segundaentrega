@@ -60,6 +60,8 @@ class contenedorMongoDB{
     }
 
     async agregarProdCarrito(req, res, id_carrito, id_producto) {
+        let producto = await productSchema.find({_id: id_producto}).then(()=>true).catch(()=>false);
+        if (producto){
         let array = await carritoSchema.find({_id: id_carrito},{"productos":1,"_id":0})
         array[0].productos.push(id_producto)
         carritoSchema
@@ -68,7 +70,9 @@ class contenedorMongoDB{
             })
             .then(data => res.json(data))
             .catch(error => res.json({ messaje: error }))
-    
+        }else{
+            res.send({mensaje: "El producto no existe"})
+        }
     }
 
     async borraProdCarrito(req, res, id_carrito, id_producto) {
