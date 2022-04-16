@@ -79,12 +79,12 @@ class contenedorFirebase{
         const itemProd = await docProd.get()
         const responseProd = itemProd.data()
         if ((responseProd !== undefined)){
-        const doc = queryCarritos.doc(id_carrito)
-        const item = await doc.get()
-        const response = item.data()
-        response.productos.push(id_producto)
-        await doc.update({productos: response.productos})
-        res.json(response.productos)
+            const doc = queryCarritos.doc(id_carrito)
+            const item = await doc.get()
+            const response = item.data()
+            response.productos.push(id_producto)
+            await doc.update({productos: response.productos})
+            res.json(response.productos)
        }else{
             res.json({mensaje: "No se puede agregar un producto que no existe"})
         }     
