@@ -114,7 +114,7 @@ class contenedorFirebase{
         const doc = queryCarritos.doc(id_carrito)
         const item = await doc.get()
         const response = item.data()
-        if ((response.productos).includes(parseInt(id_producto))) {
+        if ((response.productos).includes(id_producto)) {
             let filtrada = response.productos.filter(elem => elem == id_producto)
             res.json({ cantidad: filtrada.length })
         } else {
