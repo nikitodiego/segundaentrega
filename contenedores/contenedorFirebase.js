@@ -88,7 +88,7 @@ class contenedorFirebase{
         const doc = queryCarritos.doc(id_carrito)
         const item = await doc.get()
         const response = item.data()
-        response.productos.push(parseInt(id_producto))
+        response.productos.push(id_producto)
         await doc.update({productos: response.productos})
         res.json(response.productos)
        }else{
@@ -101,7 +101,7 @@ class contenedorFirebase{
         const item = await doc.get()
         const response = item.data()
         //console.log(response.productos.includes(11))
-        if ((response.productos).includes(parseInt(id_producto))){
+        if ((response.productos).includes(id_producto)){
             let index = response.productos.indexOf(parseInt(id_producto))
             response.productos.splice(index, 1)
             await doc.update({productos: response.productos})
