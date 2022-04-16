@@ -11,7 +11,6 @@ class contenedorFirebase{
             let docs = querySnapshot.docs
             const response = docs.map((doc) => ({
                 title: doc.data().title,
-                nombre: doc.data().nombre,
                 price: doc.data().price,
                 thumbnail: doc.data().thumbnail,
                 stock: doc.data().stock,
@@ -39,7 +38,7 @@ class contenedorFirebase{
 
     async updateById(req, res, id) {
         const doc = query.doc(id);
-        await doc.update({nombre: req.body.title, price: req.body.price, thumbnail: req.body.thumbnail, stock: req.body.stock})
+        await doc.update({title: req.body.title, price: req.body.price, thumbnail: req.body.thumbnail, stock: req.body.stock})
         res.json(doc)
         
     }
@@ -63,7 +62,6 @@ class contenedorFirebase{
             let docs = querySnapshot.docs
             const response = docs.map((doc) => ({
                 title: doc.data().title,
-                nombre: doc.data().nombre,
                 price: doc.data().price,
                 thumbnail: doc.data().thumbnail,
                 stock: doc.data().stock,
@@ -83,12 +81,19 @@ class contenedorFirebase{
     }
 
     async agregarProdCarrito(req, res, id_carrito, id_producto) {
+        const docProd = query.doc(id_producto)
+        const itemProd = await docProd.get()
+        const responseProd = itemProd.data()
+        if ((responseProd !== undefined)){
         const doc = queryCarritos.doc(id_carrito)
         const item = await doc.get()
         const response = item.data()
         response.productos.push(parseInt(id_producto))
         await doc.update({productos: response.productos})
         res.json(response.productos)
+       }else{
+            res.json({mensaje: "No se puede agregar un producto que no existe"})
+        }     
     }
 
     async borraProdCarrito(req, res, id_carrito, id_producto) {
